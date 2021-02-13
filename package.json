@@ -1,0 +1,53 @@
+{
+  "name": "request-react-hooks",
+  "version": "1.2.2",
+  "description": "Hook for making asynchronous requests and subscribing to updates request state",
+  "main": "lib/index.js",
+  "types": "lib",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "react-hooks",
+    "react-request",
+    "request-react-hooks",
+    "request",
+    "react-async"
+  ],
+  "author": "Aleksandr Jet",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/lodash.isempty": "^4.4.6",
+    "@types/lodash.some": "^4.6.6",
+    "@types/react": "^17.0.1",
+    "prettier": "^2.2.1",
+    "react": "^17.0.1",
+    "typescript": "^4.1.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.13.1"
+  },
+  "dependencies": {
+    "lodash.isempty": "^4.4.0",
+    "lodash.some": "^4.6.0"
+  },
+  "files": [
+    "lib/",
+    "src/",
+    "package.json",
+    "tsconfig.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "bugs": {
+    "url": "https://github.com/aleksandrjet/request-react-hooks/issues",
+    "email": "aleksandrjet@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aleksandrjet/request-react-hooks"
+  },
+  "homepage": "https://github.com/aleksandrjet/request-react-hooks"
+}
