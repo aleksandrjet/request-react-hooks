@@ -32,7 +32,7 @@ const reducer = <VALUE>(
   switch (action.type) {
     case 'setLoading':
       const loading = (action as IBaseAction<VALUE, 'setLoading'>).payload
-      return { ...state, loading, error: loading ? null : state.error }
+      return { ...state, loading }
 
     case 'setValue':
       const value = (action as IBaseAction<VALUE, 'setValue'>).payload

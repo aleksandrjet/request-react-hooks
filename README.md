@@ -135,7 +135,7 @@ const myData: string | undefined = requestState.value?.data
 // ERROR! 
 // the compiler throws an error, 
 // that there is no otherParamter in the requestState
-const otherValue = requestState.value?.unknownValue
+const otherInvalidValue = requestState.value?.unknownValue
 
 // ERROR!
 // the compiler throws an error, 
@@ -159,20 +159,6 @@ case 'setValue':
 case 'setError':
   const error = (action as IBaseAction<VALUE, 'setError'>).payload
   return { ...state, error, loading: false, value: null }
-```
-#### Changing loading (!!!)
-```typescript
-// When changing loading on error
-// the error value is cleared, but the value is not cleared (!!!).
-case 'setLoading':
-  const loading = (action as IBaseAction<VALUE, 'setLoading'>).payload
-  return { ...state, loading, error: loading ? null : state.error }
-
-// This is due to the fact that we want to see the value in 
-// the requestState, even if the lazyRequest was invoked with 
-// new parameters.
-// The old value will be in the requestState until a new one 
-// comes or the lazyRequest will fail
 ```
 
 ## RequestState clearing
