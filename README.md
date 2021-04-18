@@ -17,7 +17,7 @@ Pass an `asyncRequest` function to the hook and subscribe to `requestState` upda
 import { useLazyRequest } from 'request-react-hooks'
 
 const asyncRequest = async (parameter: number): Promise<string> => {
-  await setTimeout(() => {}, 500) //backend simulation 
+  await requestToBackend() //backend simulation 
   return 'its result ' + String(parameter)
 }
 
@@ -51,7 +51,7 @@ If the `lazyRequest` function fails, an error state will be written to the `requ
 
 ```typescript
 const asyncRequest = async (parameter: string): Promise<string> => {
-  await setTimeout(() => {}, 500) //backend simulation
+  await requestToBackend() //backend simulation
 
   if (parameter === 'invalid parameter') {
     throw {
@@ -84,7 +84,7 @@ When trying to call the `lazyRequest` function with parameters different from th
 
 ```typescript
 const asyncRequest = async (par1: number, par2: string): Promise<string> => {
-  await setTimeout(() => {}, 500) //backend simulation
+  await requestToBackend() //backend simulation
   return 'its result ' + String(par1) + ' ' + par2
 }
 
@@ -109,7 +109,7 @@ type Result = { data: string; another: number }
 const asyncRequest = async (params: Params): Promise<Result> => {
   const { par1, par2 } = params
 
-  await setTimeout(() => {}, 500) //backend simulation
+  await requestToBackend() //backend simulation
 
   return {
     data: par1 + '_' + par2,
@@ -165,7 +165,7 @@ case 'setError':
 useLazyrRequest hook allows you to reset the `requestSate`. To do this, use the optional `clearState` function returned by the hook
 ```jsx
 const asyncRequest = async (parameter: number): Promise<string> => {
-  await setTimeout(() => {}, 500) //backend simulation
+  await requestToBackend() //backend simulation
   return 'its result ' + String(parameter)
 }
 
