@@ -1,4 +1,8 @@
-import { useLazyRequest, IUseLazyRequestResult } from './useLazyRequest'
+import {
+  useLazyRequest,
+  IUseLazyRequestResult,
+  Unpacked,
+} from './useLazyRequest'
 import {
   useStateRequest,
   IActions,
@@ -14,7 +18,7 @@ import {
   IResultReducerRequest,
 } from './useReducerRequest'
 
-export { useLazyRequest, IUseLazyRequestResult }
+export { useLazyRequest, IUseLazyRequestResult, Unpacked }
 
 export { useStateRequest, IActions, IResultRequestState }
 

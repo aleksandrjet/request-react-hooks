@@ -1,19 +1,15 @@
-import { useCallback, useEffect } from 'react'
-import isEmpty from 'lodash.isempty'
-import some from 'lodash.some'
+import { useCallback } from 'react'
 
-import { useStateRequest } from './useStateRequest'
+import { IActions, useStateRequest } from './useStateRequest'
 import { IStateReducer } from './useReducerRequest'
 
-type Unpacked<T> = T extends (infer U)[]
+export type Unpacked<T> = T extends (infer U)[]
   ? U
   : T extends (...args: any[]) => infer U
   ? U
   : T extends Promise<infer U>
   ? U
   : T
-
-type IClearState = () => void
 
 type IRequest = (...args: any[]) => any
 
@@ -26,14 +22,15 @@ interface ILazyRequest<Request extends IRequest> {
 export type IUseLazyRequestResult<Request extends IRequest> = [
   IStateReducer<IRequestValue<Request>>,
   ILazyRequest<Request>,
-  IClearState,
+  IActions<IRequestValue<Request>>,
 ]
 
 export const useLazyRequest = <Request extends IRequest>(
   request: Request,
 ): IUseLazyRequestResult<Request> => {
   const requestState = useStateRequest<IRequestValue<Request>>()
-  const { state, setLoading, setValue, setError } = requestState
+  const { state, ...actions } = requestState
+  const { setLoading, setValue, setError } = actions
 
   const lazyRequest = useCallback<ILazyRequest<Request>>(
     async (...values) => {
@@ -41,20 +38,17 @@ export const useLazyRequest = <Request extends IRequest>(
         setLoading(true)
         const response = await request(...values)
         setValue(response)
+        setError(null)
         return response
       } catch (e) {
-        console.error('error', e)
         setError(e)
+        setValue(null)
+      } finally {
+        setLoading(false)
       }
     },
     [request],
   )
 
-  const clearState = useCallback(() => {
-    some(state, !isEmpty) && requestState.clearState()
-  }, [state])
-
-  useEffect(() => clearState, [])
-
-  return [state, lazyRequest, clearState]
+  return [state, lazyRequest, actions]
 }

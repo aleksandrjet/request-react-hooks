@@ -21,7 +21,7 @@ export type IActionType = IBaseActionType | 'clearState'
 
 export type IAction<VALUE> =
   | IBaseAction<VALUE, IBaseActionType>
-  | { type: 'clearState' }
+  | { type: 'clearState'; payload: undefined }
 
 const initialState = { loading: false, error: null, value: null }
 
@@ -29,18 +29,26 @@ const reducer = <VALUE>(
   state: IStateReducer<VALUE>,
   action: IAction<VALUE>,
 ): IStateReducer<VALUE> => {
+  const payload = action.payload
+
   switch (action.type) {
     case 'setLoading':
-      const loading = (action as IBaseAction<VALUE, 'setLoading'>).payload
-      return { ...state, loading }
+      return {
+        ...state,
+        loading: payload as IPayloads<VALUE>['setLoading'],
+      }
 
     case 'setValue':
-      const value = (action as IBaseAction<VALUE, 'setValue'>).payload
-      return { ...state, value, loading: false, error: null }
+      return {
+        ...state,
+        value: payload as IPayloads<VALUE>['setValue'],
+      }
 
     case 'setError':
-      const error = (action as IBaseAction<VALUE, 'setError'>).payload
-      return { ...state, error, loading: false, value: null }
+      return {
+        ...state,
+        error: payload as IPayloads<VALUE>['setError'],
+      }
 
     case 'clearState':
       return initialState
