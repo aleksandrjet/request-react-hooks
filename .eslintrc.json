@@ -1,0 +1,88 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "amd": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:sonarjs/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "import",
+    "sonarjs",
+    "no-use-extend-native"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": "off", //todo убрать исключение
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn",
+      { "allowExpressions": true }
+    ],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "eqeqeq": "error",
+    "id-length": [
+      "warn",
+      { "min": 2, "exceptions": ["i", "w", "h", "p", "e", "n", "s", "m"] }
+    ],
+    "indent": ["error", 2, { "SwitchCase": 1, "VariableDeclarator": "first" }],
+    "import/export": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "max-lines": ["warn", { "max": 300, "skipComments": true }],
+    "max-lines-per-function": ["warn", { "max": 70, "skipComments": true }],
+    "max-nested-callbacks": ["error", 3],
+    "max-depth": ["error", 4],
+    "max-params": ["error", 3],
+    "no-console": ["warn", { "allow": ["error"] }],
+    "no-debugger": "error",
+    "no-lonely-if": "error",
+    "no-nested-ternary": "error",
+    "react/prop-types": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.js"],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off"
+      },
+      "plugins": ["jest"]
+    }
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"]
+  },
+  "ignorePatterns": [
+    "lib/**/*.*",
+    "build/**/*.*",
+    "node_modules/**/*.*",
+    "public/**/*.*"
+  ]
+}

@@ -23,7 +23,7 @@ export const useStateRequest = <VALUE>(): IResultRequestState<VALUE> => {
     setLoading: (payload) => dispatch({ type: 'setLoading', payload }),
     setValue: (payload) => dispatch({ type: 'setValue', payload }),
     setError: (payload) => dispatch({ type: 'setError', payload }),
-    clearState: () => dispatch({ type: 'clearState' }),
+    clearState: () => dispatch({ type: 'clearState', payload: undefined }),
   }
 
   return { state, ...actionCreators }
