@@ -4,30 +4,30 @@ import {
   Unpacked,
 } from './useLazyRequest'
 import {
-  useStateRequest,
-  IActions,
-  IResultRequestState,
-} from './useStateRequest'
+  useRequestState,
+  ActionCreators,
+  RequestStateResult,
+} from './useRequestState'
 import {
-  useReducerRequest,
-  IStateReducer,
-  IPayloads,
-  IActionType,
-  IAction,
-  IReducer,
-  IResultReducerRequest,
-} from './useReducerRequest'
+  useRequestReducer,
+  State,
+  ActionPayloads,
+  ActionType,
+  Action,
+  RequestReducer,
+  RequestReducerResult,
+} from './useRequestReducer'
 
 export { useLazyRequest, IUseLazyRequestResult, Unpacked }
 
-export { useStateRequest, IActions, IResultRequestState }
+export { useRequestState, ActionCreators, RequestStateResult }
 
 export {
-  useReducerRequest,
-  IStateReducer,
-  IPayloads,
-  IActionType,
-  IAction,
-  IReducer,
-  IResultReducerRequest,
+  useRequestReducer,
+  State,
+  ActionPayloads,
+  ActionType,
+  Action,
+  RequestReducer,
+  RequestReducerResult,
 }

@@ -39,7 +39,7 @@
       "warn",
       { "min": 2, "exceptions": ["i", "w", "h", "p", "e", "n", "s", "m"] }
     ],
-    "indent": ["error", 2, { "SwitchCase": 1, "VariableDeclarator": "first" }],
+    //    "indent": ["error", 2, { "SwitchCase": 1, "VariableDeclarator": "first" }],
     "import/export": "error",
     "import/first": "error",
     "import/newline-after-import": "error",

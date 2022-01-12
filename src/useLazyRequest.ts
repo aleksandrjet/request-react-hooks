@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { IActions, useStateRequest } from './useStateRequest'
-import { IStateReducer } from './useReducerRequest'
+import { ActionCreators, useRequestState } from './useRequestState'
+import { State } from './useRequestReducer'
 
 export type Unpacked<T> = T extends (infer U)[]
   ? U
@@ -20,25 +20,29 @@ interface ILazyRequest<Request extends IRequest> {
 }
 
 export type IUseLazyRequestResult<Request extends IRequest> = [
-  IStateReducer<IRequestValue<Request>>,
+  State<IRequestValue<Request>>,
   ILazyRequest<Request>,
-  IActions<IRequestValue<Request>>,
+  ActionCreators<IRequestValue<Request>>,
 ]
 
 export const useLazyRequest = <Request extends IRequest>(
   request: Request,
 ): IUseLazyRequestResult<Request> => {
-  const requestState = useStateRequest<IRequestValue<Request>>()
-  const { state, ...actions } = requestState
+  const requestState = useRequestState<IRequestValue<Request>>()
+
+  const [state, actions] = requestState
   const { setLoading, setValue, setError } = actions
 
   const lazyRequest = useCallback<ILazyRequest<Request>>(
     async (...values) => {
       try {
         setLoading(true)
+
         const response = await request(...values)
         setValue(response)
+
         setError(null)
+
         return response
       } catch (e) {
         setError(e)
