@@ -9,22 +9,22 @@
     "eslint": "eslint --max-warnings=0 .",
     "tslint": "tsc --noEmit",
     "build": "rm -rf lib && tsc",
+    "build-webpack": "ts-node \"./scripts/build.ts\"",
     "pre-publish": "npm run prettier && npm run tslint && npm run eslint && npm run build"
   },
-  "keywords": [
-    "react",
-    "react-hooks",
-    "react-request",
-    "request-react-hooks",
-    "request",
-    "react-async"
-  ],
-  "author": "Aleksandr Jet",
-  "license": "MIT",
   "devDependencies": {
+    "@babel/core": "7.16.7",
+    "@babel/preset-env": "7.16.8",
+    "@babel/preset-react": "7.16.7",
     "@types/react": "17.0.8",
+    "@types/webpack": "5.28.0",
     "@typescript-eslint/eslint-plugin": "4.28.1",
     "@typescript-eslint/parser": "4.28.1",
+    "app-root-path": "3.0.0",
+    "babel-loader": "8.2.3",
+    "babel-plugin-istanbul": "6.1.1",
+    "clean-webpack-plugin": "4.0.0",
+    "cypress": "8.7.0",
     "eslint": "7.29.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jest": "24.3.6",
@@ -35,7 +35,13 @@
     "prettier": "2.3.0",
     "pretty-quick": "3.1.0",
     "react": "17.0.2",
-    "typescript": "4.2.4"
+    "ts-loader": "9.2.6",
+    "ts-node": "10.4.0",
+    "typescript": "4.2.4",
+    "webpack": "5.66.0",
+    "webpack-bundle-analyzer": "4.5.0",
+    "webpack-merge": "5.8.0",
+    "webpackbar": "5.0.2"
   },
   "peerDependencies": {
     "react": ">=16.13.1"
@@ -57,5 +63,15 @@
     "type": "git",
     "url": "https://github.com/aleksandrjet/request-react-hooks"
   },
-  "homepage": "https://github.com/aleksandrjet/request-react-hooks"
+  "homepage": "https://github.com/aleksandrjet/request-react-hooks",
+  "keywords": [
+    "react",
+    "react-hooks",
+    "react-request",
+    "request-react-hooks",
+    "request",
+    "react-async"
+  ],
+  "author": "Aleksandr Jet",
+  "license": "MIT"
 }

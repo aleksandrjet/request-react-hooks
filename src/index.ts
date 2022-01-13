@@ -1,13 +1,9 @@
-import {
-  useLazyRequest,
-  IUseLazyRequestResult,
-  Unpacked,
-} from './useLazyRequest'
+import { useLazyRequest, UseLazyRequestResult } from './hooks/useLazyRequest'
 import {
   useRequestState,
   ActionCreators,
   RequestStateResult,
-} from './useRequestState'
+} from './hooks/useRequestState'
 import {
   useRequestReducer,
   State,
@@ -16,9 +12,9 @@ import {
   Action,
   RequestReducer,
   RequestReducerResult,
-} from './useRequestReducer'
+} from './hooks/useRequestReducer'
 
-export { useLazyRequest, IUseLazyRequestResult, Unpacked }
+export { useLazyRequest, UseLazyRequestResult }
 
 export { useRequestState, ActionCreators, RequestStateResult }
 
