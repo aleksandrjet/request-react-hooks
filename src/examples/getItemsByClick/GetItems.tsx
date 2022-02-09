@@ -10,7 +10,7 @@ const users: User[] = [
 ]
 
 const asyncRequest = (): Promise<User[]> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(users)
     }, 3000)
@@ -22,10 +22,23 @@ const GetItemsTest: FC = () => {
 
   return (
     <div>
-      <button>show users</button>
-      <button>hide</button>
+      {state.value ? (
+        <button onClick={actions.clearState}>Reset user list</button>
+      ) : (
+        <button onClick={sendRequest}>Load users</button>
+      )}
 
-      <div data-cy-id={'resultBlock'}></div>
+      {state.value && (
+        <div data-cy-id={'resultBlock'}>
+          {state.value.map((user, index) => {
+            return (
+              <p key={`user_${index}_${user.name}`}>
+                {user.name} {user.secondName}
+              </p>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
