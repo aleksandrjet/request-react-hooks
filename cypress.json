@@ -1,1 +1,12 @@
-{}
+{
+  "component": {
+    "testFiles": "**/*.test.{js,ts,jsx,tsx}",
+    "componentFolder": "src/examples",
+    "nodeVersion": "system",
+    "viewportHeight": 500,
+    "viewportWidth": 800
+  },
+  "env": {
+    "coverage": false
+  }
+}

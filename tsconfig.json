@@ -16,7 +16,8 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "downlevelIteration": true,
-    "declaration": true
+    "declaration": true,
+    "types": ["node", "cypress", "mocha"]
   },
   "include": ["src"]
 }

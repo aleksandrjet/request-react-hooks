@@ -1,34 +1,52 @@
-import React, { FC, useCallback } from 'react'
+import React, { ChangeEvent, FC, useCallback, useMemo } from 'react'
+
 import { useLazyRequest } from '../../index'
 
 const asyncRequest = (query): Promise<string> => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
+      if (query === 'error request') {
+        reject('error! invalid request!')
+      }
+
       resolve('result for query:' + query)
-    }, 300)
+    }, 3000)
   })
 }
 
 const SearchQuery: FC = () => {
-  const [state, sendRequest] = useLazyRequest(asyncRequest)
-  const { value, loading } = state
+  const [state, sendRequest, actions] = useLazyRequest(asyncRequest)
+  const { value, loading, error } = state
 
   const handleChange = useCallback(
-    (event) => {
-      sendRequest(event.target.value)
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const query = event.target.value
+
+      if (query) {
+        sendRequest(query)
+      } else {
+        actions.clearState()
+      }
     },
     [sendRequest],
   )
 
+  const content = useMemo(() => {
+    if (loading) {
+      return <p data-cy-id={'loaderBlock'}>loading...</p>
+    } else if (error) {
+      return <p data-cy-id={'errorBlock'}>{error}</p>
+    } else if (value) {
+      return <p data-cy-id={'resultBlock'}>{value}</p>
+    } else {
+      return <p data-cy-id={'placeholderBlock'}>please, input request</p>
+    }
+  }, [state])
+
   return (
     <div>
       <input onChange={handleChange} data-cy-id={'search-field'} />
-
-      {loading ? (
-        <p data-cy-id={'loader'}>Loading...</p>
-      ) : (
-        <p data-cy-id={'result'}> {value}</p>
-      )}
+      {content}
     </div>
   )
 }

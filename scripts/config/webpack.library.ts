@@ -6,8 +6,10 @@ import {
   excludePeerDependencies,
   webpackAnalyze,
   webpackBar,
+  webpackCleanDirectory,
   webpackLibraryName,
 } from '../modules/buildUtils'
+import { BUILD_DIRECTORY, SOURCE_DIRECTORY } from '../constants'
 
 export const webpackLibrary: () => Webpack.Configuration = () => {
   return webpackMerge(
@@ -15,10 +17,13 @@ export const webpackLibrary: () => Webpack.Configuration = () => {
     {
       mode: 'production',
       devtool: false,
+      entry: [`${SOURCE_DIRECTORY}/index.ts`],
+      output: { path: BUILD_DIRECTORY, filename: 'index.js', publicPath: '/' },
     },
     webpackLibraryName(),
     excludePeerDependencies(),
     webpackBar(),
     webpackAnalyze(),
+    webpackCleanDirectory(),
   )
 }
