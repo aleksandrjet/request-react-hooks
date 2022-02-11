@@ -1,19 +1,18 @@
 import React, { FC } from 'react'
+
 import { useLazyRequest } from '../../index'
 
 type User = { name: string; secondName: string }
 
 const users: User[] = [
-  { name: 'John', secondName: 'Malkovich' },
-  { name: 'John', secondName: 'Malkovich' },
-  { name: 'John', secondName: 'Malkovich' },
+  { name: 'User1', secondName: 'SecondName1' },
+  { name: 'User2', secondName: 'SecondName2' },
+  { name: 'User3', secondName: 'SecondName3' },
 ]
 
 const asyncRequest = (): Promise<User[]> => {
   return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(users)
-    }, 3000)
+    setTimeout(() => resolve(users), 3000)
   })
 }
 
@@ -23,12 +22,16 @@ const GetItemsTest: FC = () => {
   return (
     <div>
       {state.value ? (
-        <button onClick={actions.clearState}>Reset user list</button>
+        <button onClick={actions.clearState} data-cy-id={'clearButton'}>
+          Reset user list
+        </button>
       ) : (
-        <button onClick={sendRequest}>Load users</button>
+        <button onClick={sendRequest} data-cy-id={'loadButton'}>
+          Load users
+        </button>
       )}
 
-      {state.value && (
+      {state.value ? (
         <div data-cy-id={'resultBlock'}>
           {state.value.map((user, index) => {
             return (
@@ -38,6 +41,8 @@ const GetItemsTest: FC = () => {
             )
           })}
         </div>
+      ) : (
+        <p data-cy-id={'placeholder'}>Click by button for load users</p>
       )}
     </div>
   )

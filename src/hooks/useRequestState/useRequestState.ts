@@ -4,7 +4,8 @@ import {
   BaseActionType,
   ActionPayloads,
   useRequestReducer,
-} from './useRequestReducer'
+  RequestReducer,
+} from '../useRequestReducer/useRequestReducer'
 
 export type ActionCreators<VALUE> = {
   [ActionType in Action]: ActionType extends BaseActionType
@@ -14,8 +15,17 @@ export type ActionCreators<VALUE> = {
 
 export type RequestStateResult<VALUE> = [State<VALUE>, ActionCreators<VALUE>]
 
-export const useRequestState = <VALUE>(): RequestStateResult<VALUE> => {
-  const [state, dispatch] = useRequestReducer<VALUE>()
+export const useRequestState = <
+  VALUE,
+  CUSTOM_STATE extends State<VALUE> = State<VALUE>,
+>(
+  customReducer?: RequestReducer<VALUE>,
+  customInitialState?: CUSTOM_STATE,
+): RequestStateResult<VALUE> => {
+  const [state, dispatch] = useRequestReducer<VALUE, CUSTOM_STATE>(
+    customReducer,
+    customInitialState,
+  )
 
   const actionCreators: ActionCreators<VALUE> = {
     setLoading: (payload) => dispatch({ type: 'setLoading', payload }),

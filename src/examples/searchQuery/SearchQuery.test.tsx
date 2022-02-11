@@ -4,15 +4,15 @@ import { mount } from '@cypress/react'
 
 import SearchQuery from './SearchQuery'
 
-describe('SearchQuery', () => {
+describe('<SearchQuery/>', () => {
   beforeEach(() => {
     mount(<SearchQuery />)
 
-    cy.get('[data-cy-id=search-field]').should('be.visible')
+    cy.get('[data-cy-id=searchField]').should('be.visible')
   })
 
   it('show result for valid request', () => {
-    cy.get('[data-cy-id=search-field]').type('search request')
+    cy.get('[data-cy-id=searchField]').type('search request')
 
     cy.get('[data-cy-id=loaderBlock]').should('be.visible')
     cy.get('[data-cy-id=resultBlock]').should('be.visible')
@@ -22,7 +22,7 @@ describe('SearchQuery', () => {
   })
 
   it('show error block if promise reject error', () => {
-    cy.get('[data-cy-id=search-field]').type('error request')
+    cy.get('[data-cy-id=searchField]').type('error request')
 
     cy.get('[data-cy-id=loaderBlock]').should('be.visible')
     cy.get('[data-cy-id=resultBlock]').should('not.exist')
@@ -32,10 +32,10 @@ describe('SearchQuery', () => {
   })
 
   it('clear result', () => {
-    cy.get('[data-cy-id=search-field]').type('search request')
+    cy.get('[data-cy-id=searchField]').type('search request')
     cy.get('[data-cy-id=loaderBlock]').should('be.visible')
 
-    cy.get('[data-cy-id=search-field]').clear()
+    cy.get('[data-cy-id=searchField]').clear()
 
     cy.get('[data-cy-id=loaderBlock]').should('not.exist')
     cy.get('[data-cy-id=resultBlock]').should('not.exist')

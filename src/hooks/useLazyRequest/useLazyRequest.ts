@@ -1,8 +1,11 @@
 import { useCallback } from 'react'
 
-import { ActionCreators, useRequestState } from './useRequestState'
-import { ExtractPromise } from '../utils/typeUtils'
-import { State } from './useRequestReducer'
+import {
+  ActionCreators,
+  useRequestState,
+} from '../useRequestState/useRequestState'
+import { ExtractPromise } from '../../utils/typeUtils'
+import { State } from '../useRequestReducer/useRequestReducer'
 
 type Request = (...args: any[]) => Promise<any>
 

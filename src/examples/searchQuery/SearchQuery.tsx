@@ -45,7 +45,7 @@ const SearchQuery: FC = () => {
 
   return (
     <div>
-      <input onChange={handleChange} data-cy-id={'search-field'} />
+      <input onChange={handleChange} data-cy-id={'searchField'} />
       {content}
     </div>
   )
