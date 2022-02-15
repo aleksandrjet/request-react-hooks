@@ -3,7 +3,7 @@ import { renderHook, act } from '@testing-library/react-hooks'
 import { useRequestState } from './useRequestState'
 
 describe('useRequestState()', () => {
-  it('set loading change only loading parameter', () => {
+  it('setting loading parameter changes only loading parameter', () => {
     const { result } = renderHook(() => useRequestState())
 
     expect(result.current[0]).toEqual({
@@ -22,7 +22,7 @@ describe('useRequestState()', () => {
     expect(result.current[0].value).toBeNull()
   })
 
-  it('set value change only value parameter', () => {
+  it('setting value parameter changes only value parameter', () => {
     const { result } = renderHook(() => useRequestState())
 
     act(() => {
@@ -35,7 +35,7 @@ describe('useRequestState()', () => {
     expect(result.current[0].error).toBeNull()
   })
 
-  it('set error change only error parameter', () => {
+  it('setting error parameter changes only error parameter', () => {
     const { result } = renderHook(() => useRequestState())
 
     act(() => {
@@ -46,18 +46,6 @@ describe('useRequestState()', () => {
 
     expect(result.current[0].value).toBeNull()
     expect(result.current[0].loading).toBeFalsy()
-  })
-
-  it('return custom initial state', () => {
-    const customState = {
-      value: 'initial_value',
-      error: { code: 400 },
-      loading: false,
-    }
-
-    const { result } = renderHook(() => useRequestState(undefined, customState))
-
-    expect(result.current[0]).toEqual(customState)
   })
 
   it('setting a parameter does not reset other values', () => {
@@ -81,5 +69,17 @@ describe('useRequestState()', () => {
 
     expect(result.current[0].value).toBe('new_value')
     expect(result.current[0].loading).toBe(true)
+  })
+
+  it('should return passed initial state', () => {
+    const customState = {
+      value: 'initial_value',
+      error: { code: 400 },
+      loading: false,
+    }
+
+    const { result } = renderHook(() => useRequestState(undefined, customState))
+
+    expect(result.current[0]).toEqual(customState)
   })
 })

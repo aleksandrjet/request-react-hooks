@@ -16,7 +16,7 @@ const asyncRequest = async (query: string | null): Promise<string> => {
 }
 
 describe('useLazyRequest()', () => {
-  it('set loading before set value', async () => {
+  it('setting loading parameter before change value', async () => {
     const { result, waitFor } = renderHook(() => useLazyRequest(asyncRequest))
 
     act(() => {
@@ -37,7 +37,7 @@ describe('useLazyRequest()', () => {
     expect(result.current[0].value).toBe(expectedValue)
   })
 
-  it('handle error in request', async () => {
+  it('changes error parameter, when request was rejected', async () => {
     const { result, waitFor } = renderHook(() => useLazyRequest(asyncRequest))
 
     act(() => {
@@ -59,7 +59,7 @@ describe('useLazyRequest()', () => {
     })
   })
 
-  it('clear state after requests', async () => {
+  it('should return initial state after call clearState action', async () => {
     const { result, waitFor } = renderHook(() => useLazyRequest(asyncRequest))
 
     act(() => {
@@ -72,7 +72,7 @@ describe('useLazyRequest()', () => {
     })
     await waitFor(() => !!result.current[0].error)
 
-    // after request with error, value parameter in state will reset
+    // after reject request, value parameter will reset
     expect(result.current[0].loading).toBeFalsy()
     expect(result.current[0].value).toBeNull()
     expect(result.current[0].error).toBeTruthy()
@@ -86,7 +86,7 @@ describe('useLazyRequest()', () => {
     expect(result.current[0].error).toBeNull()
   })
 
-  it('call action for change value in state', async () => {
+  it('call setValue action changes value parameter', async () => {
     const { result, waitFor } = renderHook(() => useLazyRequest(asyncRequest))
 
     act(() => {
@@ -98,13 +98,13 @@ describe('useLazyRequest()', () => {
       result.current[2].setValue('new_value')
     })
 
-    // if you change value by call action, loading parameter in state
+    // if you change value by action calling, loading parameter in state
     // will not change
     expect(result.current[0].loading).toBeFalsy()
     expect(result.current[0].value).toBe('new_value')
   })
 
-  it('change value if state has error', async () => {
+  it('call setValue action dont changes error parameter', async () => {
     const { result, waitFor } = renderHook(() => useLazyRequest(asyncRequest))
 
     act(() => {
@@ -116,13 +116,13 @@ describe('useLazyRequest()', () => {
       result.current[2].setValue('new_value')
     })
 
-    // if you change value by call action, error parameter in state
+    // if you change value by action calling, error parameter in state
     // will not remove
     expect(result.current[0].error).toBeTruthy()
     expect(result.current[0].value).toBe('new_value')
   })
 
-  it('clear error by call action', async () => {
+  it('call setError action with null argument will clear error parameter', async () => {
     const { result, waitFor } = renderHook(() => useLazyRequest(asyncRequest))
 
     act(() => {
