@@ -18,6 +18,5 @@
     "downlevelIteration": true,
     "declaration": true,
     "types": ["node", "cypress", "mocha"]
-  },
-  "include": ["src"]
+  }
 }

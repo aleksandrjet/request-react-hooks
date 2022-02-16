@@ -5,6 +5,5 @@ module.exports = {
     '\\.ts|tsx|js$': ['ts-jest'],
   },
   modulePaths: ['src/'],
-  modulePathIgnorePatterns: ['src/examples'],
   testEnvironment: 'jsdom',
 }

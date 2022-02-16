@@ -41,8 +41,8 @@ export const useLazyRequest = <REQUEST extends Request>(
         setError(null)
 
         return response
-      } catch (e) {
-        setError(e)
+      } catch (error) {
+        setError(error)
         setValue(null)
       } finally {
         setLoading(false)

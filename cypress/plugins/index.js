@@ -1,6 +1,4 @@
 /// <reference types="cypress" />
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 const injectWebpackDevServer = require('@cypress/react/plugins/load-webpack')
 
 module.exports = (on, config) => {

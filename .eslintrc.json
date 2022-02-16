@@ -27,7 +27,6 @@
     "no-use-extend-native"
   ],
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": "off", //todo убрать исключение
     "@typescript-eslint/explicit-function-return-type": [
       "warn",
       { "allowExpressions": true }
@@ -35,11 +34,7 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": ["warn"],
     "eqeqeq": "error",
-    "id-length": [
-      "warn",
-      { "min": 2, "exceptions": ["i", "w", "h", "p", "e", "n", "s", "m"] }
-    ],
-    //    "indent": ["error", 2, { "SwitchCase": 1, "VariableDeclarator": "first" }],
+    "id-length": ["warn"],
     "import/export": "error",
     "import/first": "error",
     "import/newline-after-import": "error",
@@ -57,20 +52,38 @@
   },
   "overrides": [
     {
-      "files": ["*.js", "*.jsx"],
+      "files": ["scripts/**/*.*"],
       "rules": {
-        "@typescript-eslint/explicit-function-return-type": "off"
+        "import/no-anonymous-default-export": "off",
+        "no-console": "off"
       }
     },
     {
-      "files": ["**/*.test.js"],
-      "env": {
-        "jest": true
-      },
+      "files": ["cypress/**/*.js"],
       "rules": {
-        "@typescript-eslint/explicit-function-return-type": "off"
-      },
-      "plugins": ["jest"]
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "files": ["examples/**/*.test.ts", "examples/**/*.test.tsx"],
+      "plugins": ["cypress"],
+      "extends": "plugin:cypress/recommended"
+    },
+    {
+      "files": ["src/**/*.test.ts", "src/**/*.test.tsx"],
+      "plugins": ["jest"],
+      "env": { "jest": true }
+    },
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "sonarjs/no-duplicate-string": "off",
+        "sonarjs/no-identical-functions": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "max-lines-per-function": "off",
+        "max-lines": "off",
+        "max-nested-callbacks": "off"
+      }
     }
   ],
   "settings": {

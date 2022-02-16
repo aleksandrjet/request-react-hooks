@@ -19,6 +19,5 @@
     "declaration": true,
     "types": ["node", "jest"]
   },
-  "include": ["src"],
-  "exclude": ["src/examples"]
+  "include": ["src"]
 }

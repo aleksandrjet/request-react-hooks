@@ -1,29 +1,36 @@
 import Webpack from 'webpack'
 import webpackMerge from 'webpack-merge'
 
-import { config as commonConfig } from './webpack.common'
 import {
   excludePeerDependencies,
   webpackAnalyze,
   webpackBar,
   webpackCleanDirectory,
-  webpackLibraryName,
 } from '../modules/buildUtils'
-import { BUILD_DIRECTORY, SOURCE_DIRECTORY } from '../constants'
+import { loadTs } from '../modules/loadTs'
+import { BUILD_DIRECTORY, EXTENSIONS, SOURCE_DIRECTORY } from '../constants'
+import packageJson from '../../package.json'
 
 export const webpackLibrary: () => Webpack.Configuration = () => {
   return webpackMerge(
-    commonConfig(),
     {
       mode: 'production',
       devtool: false,
       entry: [`${SOURCE_DIRECTORY}/index.ts`],
-      output: { path: BUILD_DIRECTORY, filename: 'index.js', publicPath: '/' },
+      output: {
+        path: BUILD_DIRECTORY,
+        filename: 'index.js',
+        publicPath: '/',
+        library: packageJson.name,
+        libraryTarget: 'umd',
+        umdNamedDefine: true,
+      },
+      resolve: { extensions: EXTENSIONS },
     },
-    webpackLibraryName(),
     excludePeerDependencies(),
     webpackBar(),
     webpackAnalyze(),
     webpackCleanDirectory(),
+    loadTs(),
   )
 }

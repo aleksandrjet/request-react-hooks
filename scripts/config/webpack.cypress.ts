@@ -1,11 +1,19 @@
 import webpackMerge from 'webpack-merge'
 
-import { config as commonConfig } from './webpack.common'
-import { EXAMPLES_DIRECTORY, SOURCE_DIRECTORY } from '../constants'
+import { BUILD_DIRECTORY, EXAMPLES_DIRECTORY, EXTENSIONS } from '../constants'
+import { loadTs } from '../modules/loadTs'
 
-export default webpackMerge(commonConfig(), {
-  mode: 'development',
-  devtool: false,
-  entry: [`${SOURCE_DIRECTORY}/examples/index.ts`],
-  output: { path: EXAMPLES_DIRECTORY, filename: 'index.js', publicPath: '/' },
-})
+export default webpackMerge(
+  {
+    mode: 'development',
+    devtool: 'source-map',
+    entry: [`${EXAMPLES_DIRECTORY}/index.ts`],
+    output: {
+      path: `${BUILD_DIRECTORY}/${EXAMPLES_DIRECTORY}`,
+      filename: 'index.js',
+      publicPath: '/',
+    },
+    resolve: { extensions: EXTENSIONS },
+  },
+  loadTs(),
+)
