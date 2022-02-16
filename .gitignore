@@ -9,6 +9,8 @@
 /coverage
 
 /lib/*
+.nyc_output
+test-results
 
 # misc
 .DS_Store

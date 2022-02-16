@@ -4,8 +4,6 @@ module.exports = (api) => {
 
   const plugins = []
 
-  console.log('babel rc', env)
-
   if (env === 'test') {
     plugins.push('istanbul')
   }

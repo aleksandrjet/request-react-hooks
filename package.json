@@ -1,6 +1,6 @@
 {
   "name": "request-react-hooks",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Hook for making asynchronous requests and subscribing to updates request state",
   "main": "lib/index.js",
   "types": "lib",
@@ -13,11 +13,17 @@
     "build-webpack": "ts-node \"./scripts/build.ts\"",
     "pre-publish": "npm run prettier && npm run tslint && npm run eslint && npm run build",
     "test:jest": "jest",
-    "test:ject:console": "jest --config jest-ci.config.js --ci --colors",
+    "test:jest:console": "jest --config jest-ci.config.js --ci --colors",
     "open-lcov-jest": "open \"./test-results/jest-coverage/lcov-report/index.html\"",
     "test:cypress": "cypress open-ct",
     "test:cypress:console": "cypress run-ct --config video=false --config-file \"./cypress-ci.json\"",
-    "open-lcov:cypress": "open coverage/lcov-report/index.html"
+    "open-lcov:cypress": "open \"./test-results/cypress-coverage/lcov-report/index.html\"",
+    "remove-reports": "rm -rf test-results .nyc_output",
+    "copy-reports": "mkdir test-results/reports && cp test-results/cypress-coverage/coverage-final.json test-results/reports/from-cypress.json && cp test-results/jest-coverage/coverage-final.json test-results/reports/from-jest.json",
+    "merge-reports": "npx nyc merge test-results/reports && mv coverage.json .nyc_output/out.json",
+    "create-report": "npx nyc report --reporter lcov --reporter text --report-dir test-results/reports-coverage",
+    "open-report": "open \"./test-results/reports-coverage/lcov-report/index.html\"",
+    "test:console": "npm run remove-reports && npm run test:jest:console && npm run test:cypress:console && npm run copy-reports && npm run merge-reports && npm run create-report && npm run open-report"
   },
   "devDependencies": {
     "@babel/core": "7.16.7",

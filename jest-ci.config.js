@@ -10,7 +10,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['**/*.{ts,tsx}'],
   coverageDirectory: './test-results/jest-coverage',
-  coverageReporters: ['text', 'lcov', 'cobertura'],
+  coverageReporters: ['json', 'text', 'lcov', 'cobertura'],
 
   reporters: [
     'default',
