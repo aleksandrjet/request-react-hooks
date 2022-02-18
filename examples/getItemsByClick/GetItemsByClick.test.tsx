@@ -4,17 +4,17 @@ import { mount } from '@cypress/react'
 import GetItems from './GetItemsByClick'
 
 describe('<GetItemsByClick/>', () => {
-  it('load and hide user list', () => {
+  it('loading and hiding list of users', () => {
     mount(<GetItems />)
 
-    cy.get('[data-cy-id=placeholder]').should('be.visible')
+    cy.getByTestId('placeholder').should('be.visible')
 
-    cy.get('[data-cy-id=loadButton]').should('be.visible').click()
+    cy.getByTestId('loadButton').should('be.visible').click()
 
-    cy.get('[data-cy-id=resultBlock]').should('be.visible')
+    cy.getByTestId('resultBlock').should('be.visible')
 
-    cy.get('[data-cy-id=clearButton]').should('be.visible').click()
+    cy.getByTestId('clearButton').should('be.visible').click()
 
-    cy.get('[data-cy-id=resultBlock]').should('not.exist')
+    cy.getByTestId('resultBlock').should('not.exist')
   })
 })

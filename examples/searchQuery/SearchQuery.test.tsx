@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import React from 'react'
 import { mount } from '@cypress/react'
 
@@ -8,40 +7,40 @@ describe('<SearchQuery/>', () => {
   beforeEach(() => {
     mount(<SearchQuery />)
 
-    cy.get('[data-cy-id=searchField]').should('be.visible')
+    cy.getByTestId('searchField').should('be.visible')
   })
 
-  it('show result for valid request', () => {
-    cy.get('[data-cy-id=searchField]').type('search request')
+  it('shows result for valid query', () => {
+    cy.getByTestId('searchField').type('search request')
 
-    cy.get('[data-cy-id=loaderBlock]').should('be.visible')
-    cy.get('[data-cy-id=resultBlock]').should('be.visible')
+    cy.getByTestId('loaderBlock').should('be.visible')
+    cy.getByTestId('resultBlock').should('be.visible')
 
-    cy.get('[data-cy-id=resultBlock]').should('contain.text', 'result')
-    cy.get('[data-cy-id=resultBlock]').should('contain.text', 'search request')
+    cy.getByTestId('resultBlock').should('contain.text', 'result')
+    cy.getByTestId('resultBlock').should('contain.text', 'search request')
   })
 
-  it('show error block if promise reject error', () => {
-    cy.get('[data-cy-id=searchField]').type('error request')
+  it('shows error block if promise was rejected', () => {
+    cy.getByTestId('searchField').type('error request')
 
-    cy.get('[data-cy-id=loaderBlock]').should('be.visible')
-    cy.get('[data-cy-id=resultBlock]').should('not.exist')
-    cy.get('[data-cy-id=errorBlock]').should('be.visible')
+    cy.getByTestId('loaderBlock').should('be.visible')
+    cy.getByTestId('resultBlock').should('not.exist')
+    cy.getByTestId('errorBlock').should('be.visible')
 
-    cy.get('[data-cy-id=errorBlock]').should('contain.text', 'error')
+    cy.getByTestId('errorBlock').should('contain.text', 'error')
   })
 
-  it('clear result', () => {
-    cy.get('[data-cy-id=searchField]').type('search request')
-    cy.get('[data-cy-id=loaderBlock]').should('be.visible')
+  it('calling clearState action will clear result', () => {
+    cy.getByTestId('searchField').type('search request')
+    cy.getByTestId('loaderBlock').should('be.visible')
 
-    cy.get('[data-cy-id=searchField]').clear()
+    cy.getByTestId('searchField').clear()
 
-    cy.get('[data-cy-id=loaderBlock]').should('not.exist')
-    cy.get('[data-cy-id=resultBlock]').should('not.exist')
-    cy.get('[data-cy-id=errorBlock]').should('not.exist')
+    cy.getByTestId('loaderBlock').should('not.exist')
+    cy.getByTestId('resultBlock').should('not.exist')
+    cy.getByTestId('errorBlock').should('not.exist')
 
-    cy.get('[data-cy-id=placeholderBlock]').should('be.visible')
+    cy.getByTestId('placeholderBlock').should('be.visible')
   })
 })
 
