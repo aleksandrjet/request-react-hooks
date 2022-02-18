@@ -14,16 +14,16 @@
     "pre-publish": "npm run prettier && npm run tslint && npm run eslint && npm run build",
     "test:jest": "jest",
     "test:jest:console": "jest --config jest-ci.config.js --ci --colors",
-    "open-lcov-jest": "open \"./test-results/jest-coverage/lcov-report/index.html\"",
+    "open-report:jest": "open \"./test-results/jest-coverage/lcov-report/index.html\"",
     "test:cypress": "cypress open-ct",
     "test:cypress:console": "cypress run-ct --config video=false --config-file \"./cypress-ci.json\"",
-    "open-lcov:cypress": "open \"./test-results/cypress-coverage/lcov-report/index.html\"",
+    "open-report:cypress": "open \"./test-results/cypress-coverage/lcov-report/index.html\"",
     "remove-reports": "rm -rf test-results .nyc_output",
-    "copy-reports": "mkdir test-results/reports && cp test-results/cypress-coverage/coverage-final.json test-results/reports/from-cypress.json && cp test-results/jest-coverage/coverage-final.json test-results/reports/from-jest.json",
-    "merge-reports": "npx nyc merge test-results/reports && mv coverage.json .nyc_output/out.json",
-    "create-report": "npx nyc report --reporter lcov --reporter text --report-dir test-results/reports-coverage",
-    "open-report": "open \"./test-results/reports-coverage/lcov-report/index.html\"",
-    "test:console": "npm run remove-reports && npm run test:jest:console && npm run test:cypress:console && npm run copy-reports && npm run merge-reports && npm run create-report && npm run open-report"
+    "copy-reports": "mkdir test-results/temp-reports && cp test-results/cypress-coverage/coverage-final.json test-results/temp-reports/from-cypress.json && cp test-results/jest-coverage/coverage-final.json test-results/temp-reports/from-jest.json",
+    "merge-reports": "npx nyc merge test-results/temp-reports && mv coverage.json .nyc_output/out.json",
+    "create-report": "npx nyc report --reporter lcov --reporter text --report-dir test-results/coverage",
+    "test:console": "npm run remove-reports && npm run test:jest:console && npm run test:cypress:console && npm run copy-reports && npm run merge-reports && npm run create-report && npm run open-report",
+    "open-report": "open \"./test-results/coverage/lcov-report/index.html\""
   },
   "devDependencies": {
     "@babel/core": "7.16.7",
