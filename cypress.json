@@ -1,0 +1,12 @@
+{
+  "component": {
+    "testFiles": "**/*.test.{ts,tsx}",
+    "componentFolder": "examples",
+    "nodeVersion": "system",
+    "viewportHeight": 500,
+    "viewportWidth": 800
+  },
+  "env": {
+    "coverage": false
+  }
+}

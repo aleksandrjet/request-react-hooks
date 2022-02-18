@@ -17,7 +17,6 @@
     "strictNullChecks": true,
     "downlevelIteration": true,
     "declaration": true,
-    "types": ["node", "jest"]
-  },
-  "include": ["src"]
+    "types": ["node", "cypress", "mocha"]
+  }
 }

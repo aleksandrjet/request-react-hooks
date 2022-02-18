@@ -1,0 +1,14 @@
+{
+  "component": {
+    "testFiles": "**/*.test.{ts,tsx}",
+    "componentFolder": "examples",
+    "nodeVersion": "system",
+    "viewportHeight": 500,
+    "viewportWidth": 800
+  },
+  "watchForFileChanges": false,
+  "reporter": "cypress-multi-reporters",
+  "reporterOptions": {
+    "configFile": "cypress-reporter.json"
+  }
+}

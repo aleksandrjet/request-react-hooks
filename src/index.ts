@@ -1,33 +1,32 @@
 import {
   useLazyRequest,
-  IUseLazyRequestResult,
-  Unpacked,
-} from './useLazyRequest'
+  UseLazyRequestResult,
+} from './hooks/useLazyRequest/useLazyRequest'
 import {
-  useStateRequest,
-  IActions,
-  IResultRequestState,
-} from './useStateRequest'
+  useRequestState,
+  ActionCreators,
+  RequestStateResult,
+} from './hooks/useRequestState/useRequestState'
 import {
-  useReducerRequest,
-  IStateReducer,
-  IPayloads,
-  IActionType,
-  IAction,
-  IReducer,
-  IResultReducerRequest,
-} from './useReducerRequest'
+  useRequestReducer,
+  State,
+  ActionPayloads,
+  ActionType,
+  Action,
+  RequestReducer,
+  RequestReducerResult,
+} from './hooks/useRequestReducer/useRequestReducer'
 
-export { useLazyRequest, IUseLazyRequestResult, Unpacked }
+export { useLazyRequest, UseLazyRequestResult }
 
-export { useStateRequest, IActions, IResultRequestState }
+export { useRequestState, ActionCreators, RequestStateResult }
 
 export {
-  useReducerRequest,
-  IStateReducer,
-  IPayloads,
-  IActionType,
-  IAction,
-  IReducer,
-  IResultReducerRequest,
+  useRequestReducer,
+  State,
+  ActionPayloads,
+  ActionType,
+  Action,
+  RequestReducer,
+  RequestReducerResult,
 }
