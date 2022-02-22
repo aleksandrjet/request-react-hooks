@@ -2,6 +2,8 @@
 
 `useLazyRequest` accepts an `asyncRequest` function that returns some value. As the `asyncRequest` function runs, `requestState` change.
 
+It is free dependencies library, that easy in usages and does not required wrappers
+
 ## Install
 
 By using npm on yarn:
