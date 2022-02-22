@@ -1,12 +1,12 @@
 import { Dispatch, ReducerAction, ReducerState, useReducer } from 'react'
 
-export interface State<VALUE> {
+export interface RequestState<VALUE> {
   loading: boolean
   error: Record<string, any> | null
   value: VALUE | null
 }
 
-const getInitialState: <VALUE>() => State<VALUE> = () => {
+const getInitialState: <VALUE>() => RequestState<VALUE> = () => {
   return { loading: false, error: null, value: null }
 }
 
@@ -14,10 +14,10 @@ type ActionName<STATE_PROPERTY extends string> =
   `set${Capitalize<STATE_PROPERTY>}`
 
 export type ActionPayloads<VALUE> = {
-  [STATE_PROPERTY in keyof State<VALUE> as ActionName<STATE_PROPERTY>]: State<VALUE>[STATE_PROPERTY]
+  [STATE_PROPERTY in keyof RequestState<VALUE> as ActionName<STATE_PROPERTY>]: RequestState<VALUE>[STATE_PROPERTY]
 }
 
-export type BaseActionType = ActionName<keyof State<any>>
+export type BaseActionType = ActionName<keyof RequestState<any>>
 
 export interface BaseAction<VALUE, ACTION_TYPE extends BaseActionType> {
   type: ACTION_TYPE
@@ -33,7 +33,7 @@ export type Action<VALUE> =
 export type RequestReducer<
   VALUE,
   ReducerAction extends Action<VALUE> = Action<VALUE>,
-> = (state: State<VALUE>, action: ReducerAction) => State<VALUE>
+> = (state: RequestState<VALUE>, action: ReducerAction) => RequestState<VALUE>
 
 export const getBaseRequestReducer: <
   VALUE,
@@ -83,7 +83,7 @@ export type RequestReducerResult<
 
 export const useRequestReducer = <
   VALUE,
-  CUSTOM_STATE extends State<VALUE> = State<VALUE>,
+  CUSTOM_STATE extends RequestState<VALUE> = RequestState<VALUE>,
 >(
   customReducer?: RequestReducer<VALUE>,
   customInitialState?: CUSTOM_STATE,

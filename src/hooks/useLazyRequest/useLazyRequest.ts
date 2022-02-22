@@ -5,7 +5,7 @@ import {
   useRequestState,
 } from '../useRequestState/useRequestState'
 import { ExtractPromise } from '../../utils/typeUtils'
-import { State } from '../useRequestReducer/useRequestReducer'
+import { RequestState } from '../useRequestReducer/useRequestReducer'
 
 type Request = (...args: any[]) => Promise<any>
 
@@ -13,20 +13,24 @@ type RequestResult<REQUEST extends Request> = ExtractPromise<
   ReturnType<REQUEST>
 >
 
-interface LazyRequest<REQUEST extends Request> {
+export interface LazyRequest<REQUEST extends Request> {
   (...args: Parameters<REQUEST>): Promise<RequestResult<REQUEST> | undefined>
 }
 
 export type UseLazyRequestResult<REQUEST extends Request> = [
-  State<RequestResult<REQUEST>>,
+  RequestState<RequestResult<REQUEST>>,
   LazyRequest<REQUEST>,
   ActionCreators<RequestResult<REQUEST>>,
 ]
 
 export const useLazyRequest = <REQUEST extends Request>(
   request: REQUEST,
+  initialState?: RequestState<RequestResult<REQUEST>>,
 ): UseLazyRequestResult<REQUEST> => {
-  const [state, actions] = useRequestState<RequestResult<REQUEST>>()
+  const [state, actions] = useRequestState<RequestResult<REQUEST>>(
+    undefined,
+    initialState,
+  )
 
   const { setLoading, setValue, setError } = actions
 
