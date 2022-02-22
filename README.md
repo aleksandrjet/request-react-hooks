@@ -51,7 +51,66 @@ const MyAsyncComponent = () => {
 }
 ```
 
-## Exception Handling
+## Returned types
+
+Be sure to specify the types of parameters and return values for the `asyncRequest`, passed to the hook.
+
+Otherwise, the compiler will not know what value is in the `requestState` and with what it will be possible to call `lazyRequest`
+
+```typescript
+import {
+  ActionCreators,
+  LazyRequest,
+  RequestState,
+  UseLazyRequestResult,
+} from 'request-react-hooks'
+
+type Params = { par1: string; par2: string }
+type Result = { result1: string; result2: number }
+
+const asyncRequest = async (params: Params): Promise<Result> => {
+  await requestToBackend()
+  return { result1: params.par1, result2: params.par2 }
+}
+
+const initialState: Result<Result> = {
+  value: { result1: 'initial_value_1', result2: 'initial_value_2' },
+  error: null,
+  loading: false,
+}
+
+// type UseLazyRequestResult<typeof asyncRequest> = [
+//   RequestState<Result>,
+//   LazyRequest<typeof asyncRequest>,
+//   ActionCreators<Result>
+// ]
+const useLazyResult: UseLazyRequestResult<typeof asyncRequest> = useLazyRequest(
+  asyncRequest,
+  initialState,
+)
+
+// type RequestState<Result> = {
+//   value: Result | null,
+//   loading: boolean,
+//   error: Record<string, any>
+// }
+const state: RequestState<Result> = useLazyResult[0]
+
+// interface LazyRequest<typeof asyncRequest> {
+//  (args: Parameters<typeof asyncRequest>): Promise<Result | undefined>
+// }
+const lazyRequest: LazyRequest<typeof asyncRequest> = useLazyResult[1]
+
+// type ActionCreators<Result> = {
+//   setValue: (value: Result | null) => void
+//   setLoading: (loading: boolean) => void,
+//   setError: (error: Record<string, any> | null) => void
+//   clearState: () => void
+// }
+const actions: ActionCreators<Result> = useLazyResult[2]
+```
+
+## Request exception handling
 
 If the `lazyRequest` function fails, an error state will be written to the `requestState`
 
@@ -60,10 +119,7 @@ const asyncRequest = async (parameter: string): Promise<string> => {
   await requestToBackend()
 
   if (parameter === 'invalid parameter') {
-    throw {
-      text: 'function was called with invalid parameter',
-      status: 1001,
-    }
+    throw { text: 'passed invalid parameter', status: 1001 }
   }
 
   return 'its result ' + parameter
@@ -78,75 +134,83 @@ useEffect(() => {
 // will return on render:
 // { loading: false, value: null, error: null }
 // { loading: true, value: null, error: null }
-// { loading: false, value: null, error: {
-//    text: 'function was called with invalid parameter',
-//    status: 1001,
-// }}
+// {
+//   loading: false,
+//   value: null,
+//   error: {
+//     text: 'passed invalid parameter',
+//     status: 1001,
+//   }
+// }
 console.log(requestState)
 ```
 
-## LazyRequest function interface
+## Use all possibilities of useLazyRequest
 
-When trying to call the `lazyRequest` function with parameters different from the `asyncRequest` parameter passed to the hook, an error will occur
+```jsx
+import { useCallback } from 'react'
+import { RequestState, useLazyRequest } from 'request-react-hooks'
 
-```typescript
-const asyncRequest = async (par1: number, par2: string): Promise<string> => {
+type Result = string
+
+const request = async (par1: string, par2: string): Promise<Result> => {
   await requestToBackend()
-  return 'its result ' + String(par1) + ' ' + par2
+  return 'its result ' + par1 + par2
 }
 
-const [requestState, lazyRequest] = useLazyRequest(asyncRequest)
+const initialState: RequestState<Result> = {
+  value: 'initial_value',
+  error: null,
+  loading: false,
+}
 
-// - its working
-lazyRequest(111, '111')
+const Component = () => {
+  const [requestState, lazyRequest, actions] = useLazyRequest(
+    request,
+    initialState,
+  )
 
-// - its error typescript!
-lazyRequest('111', 111)
-```
+  const { loading, value, error } = requestState
 
-## RequestState interface
+  const handleReload = useCallback(() => {
+    lazyRequest('value_1', 'value_2')
+  }, [lazyRequest])
 
-Be sure to specify the types of parameters and return values for the `asyncRequest`, passed to the hook.
+  // After click on reload button, user will see the disabled button
+  // and error message, because clear error in state will be after succes
+  // execute request
+  if (error) {
+    return (
+      <>
+        <p>Error!</p>
 
-Otherwise, the compiler will not know what value is in the `requestState` and with what it will be possible to call `lazyRequest`
-
-```typescript
-type Params = { par1: string; par2: string }
-type Result = { data: string; another: number }
-
-const asyncRequest = async (params: Params): Promise<Result> => {
-  const { par1, par2 } = params
-
-  await requestToBackend()
-
-  return {
-    data: par1 + '_' + par2,
-    another: 123,
+        <button onClick={handleReload} disabled={loading}>
+          upload again
+        </button>
+      </>
+    )
   }
+
+  if (loading) {
+    return <p>Loading</p>
+  }
+
+  // This is the first thing the user sees
+  // because we passed initial values in state.
+  // After click on reload button, user will see loading message,
+  // because handling of load case happens before that case is handled
+  return (
+    <>
+      <p>{value}</p>
+
+      <button onClick={handleReload}>clear state and reload</button>
+    </>
+  )
 }
-
-const [requestState, lazyRequest] = useLazyRequest(asyncRequest)
-
-// {
-//   value: Result | null,
-//   loading: boolean,
-//   error: Record<string, any>
-// }
-type State = typeof requestState
-
-// (params: Params) => void
-type Request = typeof lazyRequest
-
-// the compiler gives hints that the requestState has value.data
-const myData: string | undefined = requestState.value?.data
-
-// ERROR!
-// the compiler throws an error,
-// that there is no otherParamter in the requestState
-const otherInvalidValue = requestState.value?.unknownValue
-
-// ERROR!
-// the compiler throws an error,
-// lazyRequest cannot be called with other parameters
-lazyRequest('error params')
 ```
+
+## More examples usage
+
+- [Get items by user click](https://github.com/aleksandrjet/request-react-hooks/blob/master/examples/getItemsByClick/GetItemsByClick.tsx)
+- [Get items by component mount](https://github.com/aleksandrjet/request-react-hooks/blob/master/examples/getItemsByMount/GetItemsByMount.tsx)
+- [Handle user input](https://github.com/aleksandrjet/request-react-hooks/blob/master/examples/searchQuery/SearchQuery.tsx)

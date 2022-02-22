@@ -1,5 +1,5 @@
 import {
-  State,
+  RequestState,
   ActionType as Action,
   BaseActionType,
   ActionPayloads,
@@ -13,11 +13,14 @@ export type ActionCreators<VALUE> = {
     : () => void
 }
 
-export type RequestStateResult<VALUE> = [State<VALUE>, ActionCreators<VALUE>]
+export type RequestStateResult<VALUE> = [
+  RequestState<VALUE>,
+  ActionCreators<VALUE>,
+]
 
 export const useRequestState = <
   VALUE,
-  CUSTOM_STATE extends State<VALUE> = State<VALUE>,
+  CUSTOM_STATE extends RequestState<VALUE> = RequestState<VALUE>,
 >(
   customReducer?: RequestReducer<VALUE>,
   customInitialState?: CUSTOM_STATE,
