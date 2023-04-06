@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, useCallback, useMemo } from 'react'
 
-import { useLazyRequest } from '../../src'
+import { useLazyRequest } from '../../lib'
 
 const asyncRequest = (query): Promise<string> => {
   return new Promise((resolve, reject) => {

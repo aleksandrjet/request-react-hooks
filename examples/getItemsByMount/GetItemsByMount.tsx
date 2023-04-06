@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useMemo } from 'react'
 
-import { useLazyRequest } from '../../src'
+import { useLazyRequest } from '../../lib'
 
 type User = { name: string; secondName: string }
 
