@@ -1,13 +1,13 @@
 {
   "name": "request-react-hooks",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Hook for making asynchronous requests and subscribing to updates request state",
   "main": "lib/index.js",
   "types": "lib",
   "scripts": {
     "prettier": "pretty-quick --staged",
     "eslint": "eslint --max-warnings=0 --cache .",
-    "tslint": "tsc --incremental",
+    "tslint": "tsc --noEmit",
     "build": "scripts/build.sh",
     "pre-publish": "npm run prettier && npm run tslint && npm run eslint && npm run build",
     "test:jest": "jest",
