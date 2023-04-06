@@ -5,7 +5,7 @@ module.exports = (on, config) => {
   require('@cypress/code-coverage/task')(on, config)
 
   injectWebpackDevServer(on, config, {
-    webpackFilename: 'scripts/config/webpack.cypress.ts',
+    webpackFilename: 'scripts/webpack.cypress.ts',
   })
 
   return config
