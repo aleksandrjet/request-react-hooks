@@ -1,9 +1,15 @@
 {
   "name": "request-react-hooks",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Hook for making asynchronous requests and subscribing to updates request state",
-  "main": "lib/index.js",
-  "types": "lib",
+  "main": "lib-esm/index.js",
+  "types": "lib-esm",
+  "exports": {
+    "types": "./lib-esm/*.d.ts",
+    "import": "./lib-esm/index.js",
+    "require": "./lib-cjs/index.js",
+    "default": "./lib-cjs/index.js"
+  },
   "scripts": {
     "prettier": "pretty-quick --staged",
     "eslint": "eslint --max-warnings=0 --cache .",
@@ -71,7 +77,8 @@
     "react": ">=16.13.1"
   },
   "files": [
-    "lib/",
+    "lib-cjs/",
+    "lib-esm/",
     "src/",
     "package.json",
     "tsconfig.json",

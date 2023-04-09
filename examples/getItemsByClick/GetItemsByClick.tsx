@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import { useLazyRequest } from '../../lib'
+import { useLazyRequest } from '../../src'
 
 type User = { name: string; secondName: string }
 

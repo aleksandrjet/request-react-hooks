@@ -93,7 +93,8 @@
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"]
   },
   "ignorePatterns": [
-    "lib/**/*.*",
+    "lib-cjs/**/*.*",
+    "lib-esm/**/*.*",
     "build/**/*.*",
     "node_modules/**/*.*",
     "public/**/*.*"
