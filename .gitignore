@@ -3,7 +3,8 @@
 /.pnp
 .pnp.js
 
-/lib/*
+/lib-esm/*
+/lib-cjs/*
 
 #tests
 .nyc_output
